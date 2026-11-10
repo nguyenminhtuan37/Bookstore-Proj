@@ -1,0 +1,61 @@
+<body>
+    <div id="sorting-bar">
+        <button class="btn" (click)="addItem()">Thêm sản phẩm</button>
+        <span class="">Sắp xếp theo:</span>
+        <select (change)="sortArray($event)">
+            <option value="ten_sp">Tên</option>
+            <option value="gia_ban">Giá bán</option>
+            <option value="gia_nhap">Giá nhập</option>
+            <option value="so_luong_ton">Số lượng tồn</option>
+        </select>
+        <select (change)="changeSortDir($event)">
+            <option value="asc">A - Z</option>
+            <option value="desc">Z - A</option>
+        </select>
+        <span>Tìm kiếm</span>
+        <input type="text" (input)="searchItem($event)">
+        <span>Lọc theo trạng thái: </span>
+        <select (change)="filterBy($event)">
+            <option value="none">Tất cả</option>
+            <option value="available">Còn hàng</option>
+            <option value="notAvailable">Hết hàng</option>
+        </select>
+        <span></span>
+    </div>
+    <table>
+        <tr style="position: sticky; background-color: aqua;">
+            <td>Id sản phẩm</td>
+            <td>Tên sản phẩm</td>
+            <td>Danh mục</td>
+            <td>Giá nhập</td>
+            <td>Giá bán</td>
+            <td>Số lượng tồn</td>
+            <td>Mức tồn tối thiểu</td>
+            <td>Trạng thái</td>
+            <td>Actions</td>
+        </tr>
+        @if (!dataSync.state().Products) {
+            <h2>Nothing to see here!</h2>
+        } @else {
+                @for (item of productSync; track $index) {
+                    <tr>
+                         <td>{{ item.id_sp }}</td>
+                        <td [style.color]="(item.so_luong_ton > item.muc_ton_toi_thieu) ? null : 'red'">{{ item.ten_sp }}</td>
+                        <td>{{ item.danh_muc }}</td>
+                        <td>{{ item.gia_nhap | vnd }}</td>
+                        <td>{{ item.gia_ban | vnd }}</td>
+                        <td>{{ item.so_luong_ton }}</td>
+                        <td>{{ item.muc_ton_toi_thieu }}</td>
+                        <td>{{ (item.so_luong_ton > item.muc_ton_toi_thieu) ? "Còn hàng" : "Hết hàng" }}</td>
+                        <td>
+                            <button class="btn" (click)="EditProduct(item.id_sp)">Sửa</button>
+                            <button class="btn cancel" (click)="DeleteProduct(item.id_sp)">Xóa</button>
+                        </td>
+                    </tr>
+                }
+        }
+    </table>
+@if (state !== 'none') {
+    <PhieuChinhSua [(formState)]="state" (changeStage)="changeReact()"></PhieuChinhSua>
+}
+</body>

@@ -1,0 +1,41 @@
+
+<div class="form-popup">
+  <div style="display: flex; justify-content: space-between;">
+    @if (formState() === 'edit'){
+      <h1>Phiếu chỉnh sửa</h1>
+    }
+    @else if (formState() === 'create') {
+      <h1>Phiếu tạo mới</h1>
+    }
+    <button style="padding: 5px 10px; background-color: red;" (click)="closePopup()">X</button>
+  </div>
+  <form class="form-container">
+    <section class="form-group">
+      <span>Tên sản phẩm <b>*</b></span> <br>
+      <input type="text" [formField]="ProductForm.ten_sp"/> <br>
+      <span>Danh mục <b>*</b></span> <br>
+      <select [formField]="ProductForm.danh_muc">
+        @for (item of this._curCates; track $index) {
+          <option [value]="item.name">{{ item.name }}</option>
+        }
+      </select>
+    </section>
+    <section class="form-group">
+      <span>Đơn vị tính</span> <br>
+      <select id="currency-choice" [formField]="ProductForm.don_vi_tinh">
+        <option [value]="DVT.VND">VND</option>
+        <option [value]="DVT.USD">USD</option>
+        <option [value]="DVT.JPY">JPY</option>
+        <option [value]="DVT.EUR">EUR</option>
+      </select> <br>
+      <span>Giá nhập <b>*</b></span> <input type="number" [formField]="ProductForm.gia_nhap" /> <br>
+      <span>Giá bán <b>*</b></span> <input type="number" [formField]="ProductForm.gia_ban" />
+    </section>
+    <section class="form-group">  
+      <span>Số lượng tồn <b>*</b></span> <input type="number" [formField]="ProductForm.so_luong_ton" /> <br>
+      <span>Mức tồn tối thiểu</span> <input type="number" [formField]="ProductForm.muc_ton_toi_thieu" />
+    </section>
+  </form>
+    <button class="btn" (click)="updateProduct()">{{formState() === 'edit' ? 'Chỉnh sửa' : 'Tạo mới'}}</button>
+    <button class="btn cancel" (click)="closePopup()">Hủy</button>
+  </div>

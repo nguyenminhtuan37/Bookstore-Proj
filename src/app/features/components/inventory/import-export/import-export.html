@@ -1,0 +1,134 @@
+<div id="receiptFormContainer">
+    <button class="state-btn" [class.active] = 'importActive' (click)="toImport()">Phiếu Nhập</button>
+    <button class="state-btn" [class.active] = 'exportActive' (click)="toExport()">Phiếu Xuất</button>
+    <div id="editContainer">
+        <div class="editField id-sp">
+            <span>Id sản phẩm *</span><br>
+            <input type="number" [formField]="formReceipt.id_sp">
+            <button (click)="findProductById(this.modelReceipt().id_sp)" class="btn find-item">Tìm kiếm sản phẩm</button>
+        </div>
+        <div class="editField so-luong">
+            <span>Số lượng *</span>
+            <input type="number" [formField]="formReceipt.so_luong">
+          </div>
+          <div class="editField don-gia">
+            <span>Đơn giá *</span>
+            <input type="number" [formField]="formReceipt.don_gia">
+        </div>
+        <button (click)="AddItems()" class="btn add-item">+ Thêm sản phẩm</button>
+    </div>
+    <table>
+        <tr>
+            <td>Id sản phẩm</td>
+            <td>Số lượng</td>
+            <td>Đơn giá</td>
+            <td>Thành tiền</td>
+            <td>Xóa</td>
+        </tr>
+        @if (AddedItems.length === 0) {
+            <h2>Nothing to see here!</h2>
+        } @else {
+            @for (item of this.AddedItems; track $index) {
+                <tr>
+                    <td>{{ item.id_sp }}</td>
+                    <td>{{ item.so_luong }}</td>
+                    <td>{{ item.don_gia | vnd }}</td>
+                    <td>{{ updateRowTotal(item) | vnd}}</td>
+                    <td><button (click)="deleteItem(item)" class="btn delete">Xóa</button></td>
+                </tr>
+            }
+            <tr>
+              <td colspan="5">Tổng tiền</td>
+              <td>{{ getGrandTotal() }}</td>
+            </tr>
+        }
+
+    </table>
+    <button class="btn oke">Xác nhận</button>
+    <button class="btn delete">Hủy bỏ</button>
+</div>
+<!-- @else {
+    <h2>Phiếu Xuất</h2>
+    Ghi phiếu nhập/ xuất
+    <table>
+        <tr>
+            <td>Id sản phẩm</td>
+            <td>Số lượng</td>
+            <td>Trạng thái</td>
+        </tr>
+        <tr>
+            <td><input type="text"></td>
+            <td><input type="text"></td>
+            <td>Hàng mới <input type="checkbox"></td>
+        </tr>
+    </table>
+    <button>Lưu nháp</button>
+    <button>Xác nhận</button>
+    <button>Hủy bỏ</button>
+}
+</div>
+ -->
+
+
+<!-- <div class="tab-group">
+  <button (click)="toImport()" [class]="importClasses()">Phiếu Nhập</button>
+  <button (click)="toExport()" [class]="exportClasses()">Phiếu Xuất</button>
+</div>
+
+<div class="form-card">
+  <div class="form-grid">
+    <div class="form-group">
+      <label>ID sản phẩm <span style="color: red;">*</span></label>
+      <input type="number" [formField]="formReceipt.id_sp" class="form-control" placeholder="Nhập ID..." />
+    </div>
+    <div class="form-group">
+      <label>Số lượng <span style="color: red;">*</span></label>
+      <input type="number" [formField]="formReceipt.so_luong" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label>Đơn giá <span style="color: red;">*</span></label>
+      <input type="number" [formField]="formReceipt.don_gia" class="form-control" />
+    </div>
+    <button (click)="AddItems()" class="btn btn-outline">+ Thêm sản phẩm</button>
+  </div>
+</div>
+
+<div class="table-container">
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>ID sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th class="text-right">Số lượng</th>
+        <th class="text-right">Đơn giá</th>
+        <th class="text-right">Thành tiền</th>
+        <th style="text-align: center;">Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of this.AddedItems; track $index) {
+        <tr>
+            <td>{{ $index }}</td>
+            <td>{{ item.id_sp }}</td>
+            <td>{{ item.ten_sp }}</td>
+            <td class="text-right">{{ item.so_luong }}</td>
+            <td class="text-right">{{ item.don_gia | vnd }}</td>
+            <td class="text-right total" style="font-weight: 600;">{{ this.updateRowTotal(item)| vnd }}</td>
+            <td style="text-align: center;">
+              <button (click)="deleteItem(item)" class="btn btn-danger" style="padding: 4px 8px; font-size: 12px;">Xóa</button>
+            </td>
+        </tr>
+      }
+      <tr>
+        <td colspan="5" class="text-right">Tổng tiền</td>
+        <td class="text-right grand-total">{{ this.getGrandTotal() | vnd }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="action-bar">
+  <button (click)="updateData()" class="btn btn-primary">Xác nhận</button>
+  <button class="btn btn-danger">Hủy bỏ</button>
+</div> -->
