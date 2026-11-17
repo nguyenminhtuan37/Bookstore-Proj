@@ -8,7 +8,7 @@ import { ProductInfo } from '../../../../shared/models/product.model';
 import { CategorySync } from '../../../../shared/services/update-data-categories.service';
 
 const DEFAULT_FORM_MODEL: ProductInfo = {
-  id_sp: 0,
+  id_sp: '',
   ten_sp: '',
   danh_muc: '',
   don_vi_tinh: '',
@@ -34,7 +34,7 @@ export class ChinhSuaSp {
   protected _curCates = this.categorySync.demoCates().categoryList ?? [];
   DVT = Constant.DVT;
   ProductModel = signal<ProductInfo>({
-    id_sp: 0,
+    id_sp: '',
     ten_sp: '',
     danh_muc: '',
     don_vi_tinh: 'viet nam dong',

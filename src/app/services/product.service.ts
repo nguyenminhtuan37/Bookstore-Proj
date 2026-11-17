@@ -8,13 +8,13 @@ export class ProductAction {
     readonly selectedProduct = signal<ProductInfo | null>(null);
     readonly products = computed(() => this.dataSync.state().Products ?? []);
 
-    getProductById(id_sp: number): ProductInfo | undefined {
+    getProductById(id_sp: string): ProductInfo | undefined {
         return this.products().find((product: ProductInfo) => product.id_sp === id_sp);
     }
 
-    addProduct(newProduct: Omit<ProductInfo, 'id_sp'> & { id_sp?: number }): void {
+    addProduct(newProduct: Omit<ProductInfo, 'id_sp'> & { id_sp?: string }): void {
         const currentProducts = this.products();
-        const id = this.generateNewId(currentProducts);
+        const id = crypto.randomUUID();
         const itemToAdd: ProductInfo = {
             ...newProduct,
             id_sp: id,
@@ -23,7 +23,7 @@ export class ProductAction {
         this.dataSync.state.set({
             ...this.dataSync.state(),
             Products: [...currentProducts, itemToAdd],
-        })
+        });
     }
     updateProduct(updatedProduct: ProductInfo): void {
         const currentProducts = this.products();
@@ -41,7 +41,7 @@ export class ProductAction {
             this.selectedProduct.set(null);
         }
     }
-    deleteProduct(id_sp: number): void {
+    deleteProduct(id_sp: string): void {
         const currentProducts = this.products();
         const filteredList = currentProducts.filter((item) => item.id_sp !== id_sp);
         this.dataSync.state.set({
@@ -50,7 +50,7 @@ export class ProductAction {
         });
 
     }
-    selectProductForEdit(id_sp: number): void {
+    selectProductForEdit(id_sp: string): void {
         const foundItem = this.getProductById(id_sp);
         if (foundItem) {
             this.selectedProduct.set({ ...foundItem });
@@ -67,9 +67,9 @@ export class ProductAction {
   /**
    * Tự động sinh ID mới dựa trên ID lớn nhất hiện tại
    */
-  private generateNewId(products: ProductInfo[]): number {
-    if (!products || products.length === 0) return 1000;
-    const maxId = Math.max(...products.map((p) => p.id_sp));
-    return maxId + 1;
-  }
+//   private generateNewId(products: ProductInfo[]): number {
+//     if (!products || products.length === 0) return 1000;
+//     const maxId = Math.max(...products.map((p) => p.id_sp));
+//     return maxId + 1;
+//   }
 }

@@ -1,5 +1,5 @@
 export interface ProductInfo {
-    id_sp: number,
+    id_sp: string,
     ten_sp: string,
     danh_muc: string,
     don_vi_tinh: string,

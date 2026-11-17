@@ -1,6 +1,6 @@
 *{
     box-sizing: border-box;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 #receiptFormContainer {
     width: 1000px;
@@ -22,14 +22,14 @@
     background-color: aliceblue;
     margin-right: 20px;
 }
-.id-sp input {
-    max-width: 180px;
-}
 .so-luong input {
     max-width: 120px;
 }
 .don-gia input {
     max-width: 120px;
+}
+.ten-sp input {
+  max-width: 180px;
 }
 td, th {
   border: 1px solid #dddddd;
@@ -59,15 +59,49 @@ table {
 }
 .state-btn {
   background: none;
-    border: #64748b 1px solid;
+    border: #64748b 3px solid;
     padding: 8px 16px;
     font-weight: 600;
     color: #64748b;
     cursor: pointer;
     border-radius: 6px;
 }
-.active {
-  border: lightgreen 1px solid;
+.toImport {
+  border: lightgreen 5px solid;
   color: lightgreen;
   font-weight: 600;
+}
+.toExport {
+  border: brown 5px solid;
+  color: brown;
+  font-weight: 600;
+}
+.dropdown-container {
+  width: 180px;
+  height: auto;
+  background: white;
+  position: relative;
+}
+.dropdown-container input {
+  width: 100%;
+  height: 20px;
+  border: 1px solid gray;
+}
+.dropdown-menu {
+  width: 100%;
+  max-height: 200px;
+  background-color: white;
+  position: absolute;
+  top: 20px;
+  scroll-behavior: auto;
+}
+.dropdown-option {
+  width: 100%;
+  height: 20px;
+  /* padding: 10px 20px; */
+  border: 1px solid gray;
+  background-color: white;
+}
+.dropdown-option:hover {
+  background-color: gray;
 }

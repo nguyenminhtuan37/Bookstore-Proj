@@ -11,9 +11,9 @@ header {
   padding: var(--content-padding);
 }
 #navbar {
-  width: auto;
-  height: 120px;
+  width: 300px;
   display: flex;
+  justify-content: space-between;
   background-color: aliceblue;
 }
 .nav-opt{
@@ -24,7 +24,10 @@ header {
 }
 .button {
   color: red;
+  text-decoration: none;
+  font-weight: 600;
 }
 .active-link {
   color: green;
+  border: solid 3px green;
 }

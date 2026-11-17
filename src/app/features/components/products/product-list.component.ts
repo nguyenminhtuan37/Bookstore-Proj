@@ -41,13 +41,13 @@ export class Product  {
     this.state = 'create';
   }
   // whats next?
-  DeleteProduct(id: number): void {
+  DeleteProduct(id: string): void {
     if(confirm("Chắc chắn xóa?")){
       this.productAction.deleteProduct(id);
       this.changeReact();
     }
   }
-  EditProduct(id: number) {
+  EditProduct(id: string) {
     this.state = 'edit';
     this.productAction.selectProductForEdit(id);
   }
@@ -129,7 +129,8 @@ export class Product  {
           value?.normalize("NFC").toLowerCase();
           let searchItems = this._curData?.filter((item) => 
               item.ten_sp.normalize("NFC").toLowerCase().includes(value) ||
-              item.danh_muc.normalize("NFC").toLowerCase().includes(value)        
+              item.danh_muc.normalize("NFC").toLowerCase().includes(value) ||
+              item.id_sp.toLowerCase().includes(value)      
           );
           this._curData = searchItems;
 

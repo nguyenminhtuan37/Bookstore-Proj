@@ -1,15 +1,43 @@
 <div id="receiptFormContainer">
-    <button class="state-btn" [class.active] = 'importActive' (click)="toImport()">Phiếu Nhập</button>
-    <button class="state-btn" [class.active] = 'exportActive' (click)="toExport()">Phiếu Xuất</button>
+    <button class="state-btn" [class.toImport] = 'receiptType === "IMPORT"' (click)="changeState('IMPORT')">Phiếu Nhập</button>
+    <button class="state-btn" [class.toExport] = 'receiptType === "EXPORT"' (click)="changeState('EXPORT')">Phiếu Xuất</button>
     <div id="editContainer">
         <div class="editField id-sp">
             <span>Id sản phẩm *</span><br>
-            <input type="number" [formField]="formReceipt.id_sp">
-            <button (click)="findProductById(this.modelReceipt().id_sp)" class="btn find-item">Tìm kiếm sản phẩm</button>
+            <div class="dropdown-container">
+              <input type="text" [formField]="formReceipt.id_sp" (input)="findProducts($event)" (focus)="this.isDropdownOpen.set(true);">
+              <!-- <button (click)="findProductById(this.modelReceipt().id_sp)" class="btn find-item">Tìm kiếm sản phẩm</button> -->
+               @if (this.isDropdownOpen()) {
+                 <div class="dropdown-menu">
+                    @for(product of productOptions; track $index){
+                      <button (click)="chooseItem(product)" class="dropdown-option">{{ product.ten_sp }}</button>
+                    }
+                  </div>
+               }
+            </div>
         </div>
+        <!-- <div class="editField ten-sp">
+          <span>Sản phẩm</span>
+          <input type="text" [formField]="formReceipt.ten_sp" />
+        </div> -->
         <div class="editField so-luong">
-            <span>Số lượng *</span>
+          @if (receiptType === "EXPORT") {
+            <span>Số lượng <b>*</b></span>
+            <span style="color: lightskyblue;">(Số lượng tồn: {{ productStock }})</span>
             <input type="number" [formField]="formReceipt.so_luong">
+            @if (formReceipt.so_luong().invalid() && formReceipt.so_luong().touched()) {
+              <p>{{ formReceipt.so_luong().errors()[0].message }}</p>
+              <!-- <ul>
+                @for(error of formReceipt.so_luong().errors(); track error) {
+                  <li>{{ error.message }}</li>
+                }
+              </ul> -->
+            }
+          }
+          @else {
+            <span>Số lượng <b>*</b></span>
+            <input type="number" [formField]="formReceipt.so_luong">
+          }
           </div>
           <div class="editField don-gia">
             <span>Đơn giá *</span>
@@ -18,19 +46,23 @@
         <button (click)="AddItems()" class="btn add-item">+ Thêm sản phẩm</button>
     </div>
     <table>
-        <tr>
+        <thead>
             <td>Id sản phẩm</td>
+            <td>Tên sản phẩm</td>
             <td>Số lượng</td>
             <td>Đơn giá</td>
             <td>Thành tiền</td>
             <td>Xóa</td>
-        </tr>
+        </thead>
         @if (AddedItems.length === 0) {
-            <h2>Nothing to see here!</h2>
+            <tr>
+              <td colspan="6"><h2>Bảng trống</h2></td>
+            </tr>
         } @else {
             @for (item of this.AddedItems; track $index) {
                 <tr>
                     <td>{{ item.id_sp }}</td>
+                    <td>{{ findProductById(item.id_sp)?.ten_sp }}</td>
                     <td>{{ item.so_luong }}</td>
                     <td>{{ item.don_gia | vnd }}</td>
                     <td>{{ updateRowTotal(item) | vnd}}</td>
@@ -38,13 +70,13 @@
                 </tr>
             }
             <tr>
-              <td colspan="5">Tổng tiền</td>
-              <td>{{ getGrandTotal() }}</td>
+              <td colspan="4">Tổng tiền</td>
+              <td>{{ getGrandTotal() | vnd }}</td>
             </tr>
         }
 
     </table>
-    <button class="btn oke">Xác nhận</button>
+    <button (click)="updateData()" class="btn oke" [class.disabled]="this.AddedItems.length === 0">Xác nhận</button>
     <button class="btn delete">Hủy bỏ</button>
 </div>
 <!-- @else {
