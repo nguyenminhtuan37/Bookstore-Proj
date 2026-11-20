@@ -6,12 +6,14 @@ import { VndPipe } from "../../../shared/pipes/currency.pipe";
 import { ChinhSuaSp } from "../inventory/edit-ticket/edit-ticket.component";
 import { ProductInfo } from "../../../shared/models/product.model";
 import { CategorySync } from "../../../shared/services/update-data-categories.service";
+import { currencyPipe } from "../../../shared/pipes/currency.pipe";
+
 
 @Component({
     selector: "product",
     styleUrls: ['../../../shared/styles/display.css'],
     templateUrl: "./products.html",
-    imports: [VndPipe, ChinhSuaSp]
+    imports: [VndPipe, ChinhSuaSp, currencyPipe]
 })
 export class Product  {
   dataSync = inject(DataSync);
@@ -161,6 +163,14 @@ export class Product  {
     }
     return this._curData;
   }
+  getTotal(): number {
+    let sum = 0
+    for (let item of this.productSync) {
+      sum += item.so_luong_ton
+    }
+    return sum
+  }
 }
+
 
       

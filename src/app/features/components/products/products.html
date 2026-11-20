@@ -44,8 +44,8 @@
                         <td>{{ item.danh_muc }}</td>
                         <td>{{ item.gia_nhap | vnd }}</td>
                         <td>{{ item.gia_ban | vnd }}</td>
-                        <td>{{ item.so_luong_ton }}</td>
-                        <td>{{ item.muc_ton_toi_thieu }}</td>
+                        <td style="text-align: right;">{{ item.so_luong_ton | numberFormat }}</td>
+                        <td style="text-align: right;">{{ item.muc_ton_toi_thieu | numberFormat}}</td>
                         <td>{{ (item.so_luong_ton > item.muc_ton_toi_thieu) ? "Còn hàng" : "Hết hàng" }}</td>
                         <td>
                             <button class="btn" (click)="EditProduct(item.id_sp)">Sửa</button>
@@ -53,6 +53,13 @@
                         </td>
                     </tr>
                 }
+                <tr>
+                    <td colspan="5">Tổng tồn</td>
+                    <td style="text-align: right; color: brown;">{{ getTotal() | numberFormat}}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
         }
     </table>
 @if (state !== 'none') {

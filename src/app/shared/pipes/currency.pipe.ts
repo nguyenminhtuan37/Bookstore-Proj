@@ -49,3 +49,24 @@ export class VndPipe implements PipeTransform {
     return this.formatter.format(num);
   }
 }
+
+
+@Pipe({
+  name: 'numberFormat',
+  standalone: true,
+})
+export class currencyPipe implements PipeTransform {
+  private formatter = new Intl.NumberFormat('de-DE');
+  transform(value: number | string | null | undefined, fallback: string = '0 ₫'): string {
+    if (value === null || value === undefined || value === '') {
+      return fallback;
+    }
+
+    const num = Number(value);
+    if (isNaN(num)) {
+      return fallback;
+    }
+
+    return this.formatter.format(num);
+  }
+}

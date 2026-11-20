@@ -105,3 +105,8 @@ table {
 .dropdown-option:hover {
   background-color: gray;
 }
+.disabled {
+  background-color: #64748b;
+  cursor:not-allowed;
+  color: white;
+}
